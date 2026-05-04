@@ -1,0 +1,28 @@
+/* App.css */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  height: 70px;
+}
+
+.navbar h5 {
+  letter-spacing: 0.2px;
+}
+
+.navbar img {
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  min-width: 160px;
+  font-size: 0.95rem;
+}
