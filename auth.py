@@ -23,13 +23,6 @@ def create_access_token(data: dict, expires_delta=None):
 
 @router.post("/login")
 def login_user(data: LoginRequest):
-    # if data.campus_id == "student01" and data.password == "12345":
-    #     return {
-    #         "access_token": "dummy_token_abc123",
-    #         "user": {"name": "John Doe", "role": "student"}
-    #     }
-    # raise HTTPException(status_code=401, detail="Invalid credentials")
-    
     student = student_collection.find_one({"college_id": data.college_id})
 
     if not student:
@@ -38,7 +31,7 @@ def login_user(data: LoginRequest):
     if student["password"] != data.password:
         raise HTTPException(status_code=401, detail="Invalid password")
 
-    token = create_access_token({"sub": student["college_id"]})
+    token = create_access_token({"sub": student["college_id"], "role":"student"})
 
     return JSONResponse({
         "access_token": token,
@@ -52,6 +45,23 @@ def login_user(data: LoginRequest):
         }
     })
 
+class Student(BaseModel):
+    college_id: str
+    name: str
+    father_name: str
+    year: int
+    sem: int
+    password: str
+    gender: str
+    email: str
+    address: str
+    phone: str
+    dob: str
+
+@router.post("/add")
+def add_student(data: Student):
+    student_collection.insert_one(data.dict())
+    return {"message": "Student added successfully"}
 
 
- 
+
